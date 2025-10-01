@@ -62,10 +62,8 @@ function DetailForm({ onUpdateDp }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(`before Name:${name} ,nickname:${nickname}`);
-    if (!name || !nickname) return;
+    if (!name) return;
 
-    console.log(`after Name:${name} ,nickname:${nickname}`);
     const user = { name, nickname, nameSize, nicknameSize };
     onUpdateDp(user);
     resetForm();
@@ -82,7 +80,6 @@ function DetailForm({ onUpdateDp }) {
     <>
       <form className="detail-form" onSubmit={handleSubmit}>
         <h3 className="title">Fill your details to generate your profile</h3>
-        <UploadImageField />
         <DetailInputField
           fieldName={"name"}
           text={name}

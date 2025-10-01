@@ -1,12 +1,31 @@
 .header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 120px;
-  gap: 20px;
+  display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 120px;
+  padding: 20px;
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
   font-size: 24px;
-  padding: 20px;
-  text-align: left;
+}
+
+.header-text h2,
+.header-text h3 {
+  margin: 0;
+}
+
+.download-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.download-button:hover {
+  background-color: #0056b3;
 }
