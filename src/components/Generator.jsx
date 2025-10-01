@@ -1,13 +1,78 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { ImageUp } from "lucide-react";
 import "../styles/generator.css";
 
-function UploadImageField() {
+export default function Generator() {
+  const [user, setUser] = useState({});
+
+  function onUpdateDp(user) {
+    setUser(user);
+    console.log(user);
+  }
+
+  function handleImageUpload(file) {
+    console.log(file);
+    setUser((prev) => ({ ...prev, file }));
+  }
+
   return (
-    <div>
-      <div className="form-group">
-        <label htmlFor="image">Your Image </label>
-        <input className="upload-input" name="image" type="file" />
+    <div className="generator">
+      <div>
+        <DetailForm onUpdateDp={onUpdateDp} />
       </div>
+      <div>
+        <DPCanvas user={user} onImageUpload={handleImageUpload} />
+      </div>
+    </div>
+  );
+}
+
+function UploadBox(onImageUpload) {
+  const [preview, setPreview] = useState(null);
+  const fileInputRef = useRef(null);
+
+  function handleClick() {
+    fileInputRef.current.click();
+  }
+
+  function handleChange(e) {
+    const file = e.target.file[0];
+    if (file && file.type.substr(0, 5) === "image") {
+      const imageUrl = URL.createObjectURL(file);
+      setPreview(imageUrl);
+      onImageUpload(file);
+    } else {
+      setPreview(null);
+      alert("Please select a valid image file");
+    }
+  }
+
+  return (
+    <div onClick={handleClick} className="upload-box">
+      {!preview ? (
+        <button aria-label="Upload image">
+          <span style={{ color: "white", textAlign: "center" }}>
+            Click here to add your image <br /> (JPG / PNG)
+          </span>
+          <ImageUp size={24} />
+        </button>
+      ) : (
+        <img
+          src={preview}
+          alt="preview"
+          style={{
+            width: "100%",
+            height: "auto",
+            objectFit: "cover",
+          }}
+        />
+      )}
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleChange}
+        accept="image/png, image/jpg, image/jpeg"
+      />
     </div>
   );
 }
@@ -101,16 +166,21 @@ function DetailForm({ onUpdateDp }) {
   );
 }
 
-function DPCanvas({ user }) {
+function DPCanvas({ user, onImageUpload }) {
   return (
     <div className="canvas">
       <h3 className="title"> Generate your DP</h3>
       <UserInfo user={user} />
+
       <div className="canvas-container">
         <img
           src="/edited-linkedIn-profile.png"
           alt="canvas by linkedIn local creative team"
         />
+
+        <div className="canvas-image-upload">
+          <UploadBox onImageUpload={onImageUpload} />
+        </div>
       </div>
     </div>
   );
@@ -131,25 +201,3 @@ function UserInfo({ user }) {
     </p>
   );
 }
-
-function Generator() {
-  const [user, setUser] = useState({});
-
-  function onUpdateDp(user) {
-    setUser(user);
-    console.log(user);
-  }
-
-  return (
-    <div className="generator">
-      <div>
-        <DetailForm onUpdateDp={onUpdateDp} />
-      </div>
-      <div>
-        <DPCanvas user={user} />
-      </div>
-    </div>
-  );
-}
-
-export default Generator;

@@ -47,19 +47,56 @@ label {
 }
 
 .canvas-container {
-  height: 750px;
-  width: auto;
-  overflow: hidden;
+  position: relative;
+  width: 100%;
+  max-width: 750px;
+  height: auto;
 }
 
 .canvas-container img {
-  height: 95%;
-  object-fit: cover;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-.upload-input {
-  height: 30px;
-  font-size: 14px;
-  background: #81b2e3;
-  padding: 20px 20px;
+.upload-box {
+  width: 75%;
+  border: 3px dashed #0c2a48;
+  border-radius: 5px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.6);
+  transform: rotate(45deg);
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.upload-box span {
+  transform: rotate(-45deg); /* counter rotate content */
+  text-align: center;
+  font-size: 12px;
+  color: #0c2a48;
+}
+
+.canvas-image-upload {
+  position: absolute;
+  width: 60%;
+  top: 14%;
+  left: 27%;
+  cursor: pointer;
+}
+
+.canvas-image-upload img {
+  width: 140%;
+  height: 140%;
+  object-fit: cover;
+  transform: rotate(-45deg); /* straighten image */
+}
+.canvas-image-upload input {
+  transform: rotate(-45deg); /* straighten image */
+  cursor: move;
 }
