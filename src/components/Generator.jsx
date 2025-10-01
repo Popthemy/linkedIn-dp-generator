@@ -10,9 +10,9 @@ export default function Generator() {
     console.log(user);
   }
 
-  function handleImageUpload(file) {
-    console.log(file);
-    setUser((prev) => ({ ...prev, file }));
+  function handleImageUpload(imageUrl) {
+    console.log(imageUrl);
+    setUser((user) => ({ ...user, image: imageUrl }));
   }
 
   return (
@@ -27,7 +27,27 @@ export default function Generator() {
   );
 }
 
-function UploadBox(onImageUpload) {
+function DPCanvas({ user, onImageUpload }) {
+  return (
+    <div className="canvas">
+      <h3 className="title"> Generate your DP</h3>
+      <UserInfo user={user} />
+
+      <div className="canvas-container">
+        <img
+          src="/edited-linkedIn-profile.png"
+          alt="canvas by linkedIn local creative team"
+        />
+
+        <div className="canvas-image-upload">
+          <UploadBox onImageUpload={onImageUpload} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function UploadBox({ onImageUpload }) {
   const [preview, setPreview] = useState(null);
   const fileInputRef = useRef(null);
 
@@ -36,11 +56,11 @@ function UploadBox(onImageUpload) {
   }
 
   function handleChange(e) {
-    const file = e.target.file[0];
+    const file = e.target.files[0];
     if (file && file.type.substr(0, 5) === "image") {
       const imageUrl = URL.createObjectURL(file);
       setPreview(imageUrl);
-      onImageUpload(file);
+      onImageUpload(imageUrl);
     } else {
       setPreview(null);
       alert("Please select a valid image file");
@@ -54,21 +74,14 @@ function UploadBox(onImageUpload) {
           <span style={{ color: "white", textAlign: "center" }}>
             Click here to add your image <br /> (JPG / PNG)
           </span>
-          <ImageUp size={24} />
+          <ImageUp size={"5%"} />
         </button>
       ) : (
-        <img
-          src={preview}
-          alt="preview"
-          style={{
-            width: "100%",
-            height: "auto",
-            objectFit: "cover",
-          }}
-        />
+        <img src={preview} alt="preview" />
       )}
       <input
         type="file"
+        style={{ display: "none" }}
         ref={fileInputRef}
         onChange={handleChange}
         accept="image/png, image/jpg, image/jpeg"
@@ -163,26 +176,6 @@ function DetailForm({ onUpdateDp }) {
         <Button>Generate DP</Button>
       </form>
     </>
-  );
-}
-
-function DPCanvas({ user, onImageUpload }) {
-  return (
-    <div className="canvas">
-      <h3 className="title"> Generate your DP</h3>
-      <UserInfo user={user} />
-
-      <div className="canvas-container">
-        <img
-          src="/edited-linkedIn-profile.png"
-          alt="canvas by linkedIn local creative team"
-        />
-
-        <div className="canvas-image-upload">
-          <UploadBox onImageUpload={onImageUpload} />
-        </div>
-      </div>
-    </div>
   );
 }
 
