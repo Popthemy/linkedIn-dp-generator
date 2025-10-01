@@ -23,9 +23,11 @@ label {
 .form-input {
   height: 30px;
   font-size: 14px;
-  border: 5px solid #3297ff;
+  color: black;
+  /* border: none; */
+  border: 2px solid #4093e6;
   border-radius: 12px;
-  padding: 20px 20px;
+  padding: 0 20px;
 }
 
 .form-input:hover,
@@ -42,6 +44,7 @@ label {
 }
 
 .canvas {
+  color: white;
   padding: 20px 20px;
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
 }
@@ -62,7 +65,7 @@ label {
 .upload-box {
   width: 75%;
   border: 3px dashed #0c2a48;
-  border-radius: 5px;
+  border-radius: 5%;
   display: flex;
   text-align: center;
   justify-content: center;
@@ -73,6 +76,15 @@ label {
   position: relative;
   aspect-ratio: 1 / 1;
   overflow: hidden;
+}
+
+.upload-box button {
+  object-fit: contain;
+}
+
+.borderless {
+  border: none;
+  background-color: #1e92ff;
 }
 
 .upload-box button {
@@ -96,13 +108,30 @@ label {
   position: absolute;
   width: 150%;
   height: 150%;
-  object-fit: contain;
+  object-fit: cover;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-.canvas-image-upload input {
+.canvas-text {
+  display: grid;
+  position: absolute;
+  max-width: 60%;
+  top: 45%;
+  left: 50%;
+  z-index: 100;
   transform: rotate(-45deg);
-  cursor: move;
+  font-size: 20px;
+  text-align: center;
+  color: white;
+  background: #1e92ff;
+}
+
+.canvas-stakeholder {
+  position: absolute;
+  top: 31%;
+  left: 8%;
+  z-index: 200;
+  background: #196dbd;
 }

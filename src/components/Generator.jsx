@@ -28,10 +28,10 @@ export default function Generator() {
 }
 
 function DPCanvas({ user, onImageUpload }) {
+  console.log(user);
   return (
     <div className="canvas">
       <h3 className="title"> Generate your DP</h3>
-      <UserInfo user={user} />
 
       <div className="canvas-container">
         <img
@@ -39,10 +39,32 @@ function DPCanvas({ user, onImageUpload }) {
           alt="canvas by linkedIn local creative team"
         />
 
+        <div className="canvas-text">
+          {!user.name ? (
+            <span>Add your name to show it here!!.</span>
+          ) : (
+            <h4>
+              {user.name} <br />
+              <span>{user.nickname}</span>
+            </h4>
+          )}
+        </div>
+        {user.stakeholder && (
+          <div className="canvas-stakeholder">
+            <h4>{user.stakeholder}</h4>
+          </div>
+        )}
+
         <div className="canvas-image-upload">
           <UploadBox onImageUpload={onImageUpload} />
         </div>
       </div>
+
+      <p className="note">
+        <strong>Attribution:</strong> All credit for the template design goes to
+        LinkedIn Local Lagos [LLL]. I developed the code logic that powers the
+        interactivity.
+      </p>
     </div>
   );
 }
@@ -68,7 +90,10 @@ function UploadBox({ onImageUpload }) {
   }
 
   return (
-    <div onClick={handleClick} className="upload-box">
+    <div
+      onClick={handleClick}
+      className={`upload-box ${preview ? "borderless" : " "}`}
+    >
       {!preview ? (
         <button aria-label="Upload image">
           <span style={{ color: "white", textAlign: "center" }}>
@@ -90,13 +115,7 @@ function UploadBox({ onImageUpload }) {
   );
 }
 
-function DetailInputField({
-  fieldName,
-  text,
-  size,
-  onChangeText,
-  onChangeSize,
-}) {
+function DetailInputField({ fieldName, text, onChangeText }) {
   return (
     <div>
       <div className="form-group">
@@ -107,21 +126,7 @@ function DetailInputField({
           value={text}
           onChange={(e) => onChangeText(e.target.value)}
           type="text"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor={`${fieldName}-font-size`}>
-          {fieldName} Font Size: {size}
-        </label>
-        <input
-          className="form-input"
-          name={`${fieldName}-font-size`}
-          type="range"
-          value={size}
-          min="12"
-          max="72"
-          onChange={(e) => onChangeSize(Number(e.target.value))}
+          placeholder={"Enter your " + fieldName}
         />
       </div>
     </div>
@@ -132,26 +137,49 @@ function Button({ children, onClick }) {
   return <button onClick={onClick}>{children}</button>;
 }
 
+function DetailSelectField({ stakeholder, onChangeStakeholder }) {
+  const stakeholders = ["Attendee", "Media", "Planning Team"];
+
+  return (
+    <div className="form-group">
+      <label>Stakeholder: </label>
+
+      <select
+        className="form-input"
+        value={stakeholder}
+        onChange={(e) => onChangeStakeholder(e.target.value)}
+      >
+        {stakeholders.map((stakeholder, i) => (
+          <option key={i} value={stakeholder}>
+            {stakeholder}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
 function DetailForm({ onUpdateDp }) {
   const [name, setName] = useState("");
-  const [nameSize, setNameSize] = useState(12);
   const [nickname, setNickname] = useState("");
-  const [nicknameSize, setNicknameSize] = useState(12);
+  const [stakeholder, setStakeholder] = useState("Attendee");
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!name) return;
 
-    const user = { name, nickname, nameSize, nicknameSize };
+    const user = { name, nickname, stakeholder };
     onUpdateDp(user);
     resetForm();
   }
 
   function resetForm() {
     setName("");
-    setNameSize(12);
     setNickname("");
-    setNicknameSize(12);
+  }
+
+  function handleChangeStakeholder(stakeholder) {
+    setStakeholder((curStakeholder) => stakeholder);
   }
 
   return (
@@ -161,36 +189,24 @@ function DetailForm({ onUpdateDp }) {
         <DetailInputField
           fieldName={"name"}
           text={name}
-          size={nameSize}
           onChangeText={setName}
-          onChangeSize={setNameSize}
         />
 
         <DetailInputField
           fieldName={"nickname"}
           text={nickname}
           onChangeText={setNickname}
-          size={nicknameSize}
-          onChangeSize={setNicknameSize}
         />
-        <Button>Generate DP</Button>
+
+        <DetailSelectField
+          stakeholder={stakeholder}
+          onChangeStakeholder={handleChangeStakeholder}
+        />
+
+        <Button>
+          {!name ? "Name is required before generating profile" : "Generate DP"}
+        </Button>
       </form>
     </>
-  );
-}
-
-function UserInfo({ user }) {
-  return (
-    <p className="title">
-      User Info: <br />
-      <span style={{ fontSize: `${user.nameSize}px` }}>
-        Name: {user.name} {user.nameSize}
-      </span>
-      <br />
-      <span style={{ fontSize: `${user.nicknameSize}px` }}>
-        Nickname:{user.nickname}
-        {user.nicknameSize}
-      </span>
-    </p>
   );
 }
