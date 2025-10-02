@@ -85,6 +85,7 @@ export default function Tips() {
               <a
                 href="https://linkedin.com"
                 target="_blank"
+                rel="noreferrer"
                 className="text-blue-600 underline"
               >
                 LinkedIn
@@ -93,6 +94,7 @@ export default function Tips() {
               <a
                 href="https://x.com"
                 target="_blank"
+                rel="noreferrer"
                 className="text-blue-400 underline"
               >
                 X
