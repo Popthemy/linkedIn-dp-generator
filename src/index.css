@@ -6,6 +6,32 @@
   box-sizing: border-box;
 }
 
+:root {
+  /* Spacing scale */
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 1rem; /* 16px */
+  --space-4: 1.5rem; /* 24px */
+  --space-5: 2rem; /* 32px */
+
+  /* Font scale (fluid) */
+  --font-sm: clamp(0.85rem, 0.9vw, 0.95rem);
+  --font-md: clamp(1rem, 1.2vw, 1.125rem);
+  --font-lg: clamp(1.25rem, 1.6vw, 1.5rem);
+  --font-xl: clamp(1.5rem, 2vw, 2rem);
+
+  /* Colors */
+  --primary: #1e92ff;
+  --primary-dark: #016ed6;
+  --primary-light: #57a0e9;
+  --neutral: #f8f9fa;
+  --border: #4093e6;
+  --text: #0c2a48;
+
+  /* Animations */
+  --transition: 0.25s ease-in-out;
+}
+
 body {
   margin: 0;
   font-family: "Roboto Mono", monospace, sans-serif;

@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { ImageUp } from "lucide-react";
 import "../styles/generator.css";
+import Tips from "./Tips";
 
 export default function Generator() {
   const [user, setUser] = useState({});
@@ -25,6 +26,7 @@ export default function Generator() {
     <div className="generator">
       <div>
         <DetailForm oonUpdateUser={oonUpdateUser} />
+        <Tips />
       </div>
       <div>
         <DPCanvas user={user} onImageUpload={handleImageUpload} />

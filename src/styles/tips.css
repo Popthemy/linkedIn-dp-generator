@@ -1,0 +1,26 @@
+.tips-container {
+  padding: var(--space-4);
+  font-size: var(--font-md);
+  margin-top: var(--space-4);
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transition: transform var(--transition);
+  text-align: left;
+  line-height: 1.5;
+}
+
+.tips-list {
+  padding: var(--space-4);
+}
+
+.tips-title {
+  color: #014ed0;
+}
+
+.tips-container strong {
+  background: var(--primary-dark);
+  color: white;
+  padding: var(--space-1);
+  border-radius: 0.5rem;
+}
