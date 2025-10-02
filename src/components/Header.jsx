@@ -1,5 +1,18 @@
 import "../styles/header.css";
 import { Download } from "lucide-react";
+import element2Pdf from "../utils/download.js";
+
+function DownloadBtn() {
+  return (
+    <button
+      onClick={() => element2Pdf("canvas-container")}
+      className="download-button"
+    >
+      <Download size={20} />
+      Download
+    </button>
+  );
+}
 
 function Header() {
   return (
@@ -8,10 +21,7 @@ function Header() {
         <h2>Profile Generator ⚡⚡</h2>
         <h3>Made for LinkedIn Local</h3>
       </div>
-      <button className="download-button">
-        <Download size={20} />
-        Download
-      </button>
+      <DownloadBtn />
     </div>
   );
 }

@@ -11,7 +11,6 @@ export default function Generator() {
   }
 
   function handleImageUpload(imageUrl) {
-    console.log(imageUrl);
     setUser((user) => ({ ...user, image: imageUrl }));
   }
 
@@ -33,8 +32,9 @@ function DPCanvas({ user, onImageUpload }) {
     <div className="canvas">
       <h3 className="title"> Generate your DP</h3>
 
-      <div className="canvas-container">
+      <div className="canvas-container" id="canvas-container">
         <img
+          id="bgImage"
           src="/edited-linkedIn-profile.png"
           alt="canvas by linkedIn local creative team"
         />
@@ -96,13 +96,18 @@ function UploadBox({ onImageUpload }) {
     >
       {!preview ? (
         <button aria-label="Upload image">
-          <span style={{ color: "white", textAlign: "center" }}>
+          <span style={{ textAlign: "center" }}>
             Click here to add your image <br /> (JPG / PNG)
           </span>
           <ImageUp size={"5%"} />
         </button>
       ) : (
-        <img src={preview} alt="preview" />
+        <img
+          id="previewImage"
+          src={preview}
+          alt="preview"
+          crossOrigin="anonymous"
+        />
       )}
       <input
         type="file"
@@ -134,7 +139,11 @@ function DetailInputField({ fieldName, text, onChangeText }) {
 }
 
 function Button({ children, onClick }) {
-  return <button onClick={onClick}>{children}</button>;
+  return (
+    <button className="form-btn" onClick={onClick}>
+      {children}
+    </button>
+  );
 }
 
 function DetailSelectField({ stakeholder, onChangeStakeholder }) {
