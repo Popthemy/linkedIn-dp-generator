@@ -5,19 +5,26 @@ import "../styles/generator.css";
 export default function Generator() {
   const [user, setUser] = useState({});
 
-  function onUpdateDp(user) {
-    setUser(user);
+  function oonUpdateUser(newUser) {
+    console.log(user);
+    setUser((curUser) => ({
+      ...curUser,
+      name: newUser.name,
+      nickname: newUser.nickname,
+      stakeholder: newUser.stakeholder,
+    }));
     console.log(user);
   }
 
   function handleImageUpload(imageUrl) {
+    console.log(user);
     setUser((user) => ({ ...user, image: imageUrl }));
   }
 
   return (
     <div className="generator">
       <div>
-        <DetailForm onUpdateDp={onUpdateDp} />
+        <DetailForm oonUpdateUser={oonUpdateUser} />
       </div>
       <div>
         <DPCanvas user={user} onImageUpload={handleImageUpload} />
@@ -34,10 +41,21 @@ function DPCanvas({ user, onImageUpload }) {
 
       <div className="canvas-container" id="canvas-container">
         <img
-          id="bgImage"
+          id="bg-image"
           src="/edited-linkedIn-profile.png"
           alt="canvas by linkedIn local creative team"
         />
+
+        {user.image && (
+          <div className="canvas-dp-image">
+            <img
+              id="dp-profile-image"
+              src={user.image}
+              alt={user.name ? user.name : "user profile image"}
+              crossOrigin="anonymous"
+            />
+          </div>
+        )}
 
         <div className="canvas-text">
           {!user.name ? (
@@ -90,25 +108,16 @@ function UploadBox({ onImageUpload }) {
   }
 
   return (
-    <div
-      onClick={handleClick}
-      className={`upload-box ${preview ? "borderless" : " "}`}
-    >
-      {!preview ? (
+    <div onClick={handleClick} className="upload-box">
+      {!preview && (
         <button aria-label="Upload image">
           <span style={{ textAlign: "center" }}>
             Click here to add your image <br /> (JPG / PNG)
           </span>
           <ImageUp size={"5%"} />
         </button>
-      ) : (
-        <img
-          id="previewImage"
-          src={preview}
-          alt="preview"
-          crossOrigin="anonymous"
-        />
       )}
+
       <input
         type="file"
         style={{ display: "none" }}
@@ -168,7 +177,7 @@ function DetailSelectField({ stakeholder, onChangeStakeholder }) {
   );
 }
 
-function DetailForm({ onUpdateDp }) {
+function DetailForm({ oonUpdateUser }) {
   const [name, setName] = useState("");
   const [nickname, setNickname] = useState("");
   const [stakeholder, setStakeholder] = useState("Attendee");
@@ -178,7 +187,7 @@ function DetailForm({ onUpdateDp }) {
     if (!name) return;
 
     const user = { name, nickname, stakeholder };
-    onUpdateDp(user);
+    oonUpdateUser(user);
     resetForm();
   }
 
