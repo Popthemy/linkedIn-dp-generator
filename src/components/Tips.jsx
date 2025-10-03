@@ -83,7 +83,7 @@ export default function Tips() {
             <span className="text-gray-700">
               Reach out to me on
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/popoola-oluwatemilorun/"
                 target="_blank"
                 rel="noreferrer"
                 className="text-blue-600 underline"
