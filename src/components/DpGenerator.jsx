@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
 import { ImageUp } from "lucide-react";
-import "../styles/generator.css";
+import "../styles/dpgenerator.css";
 import Tips from "./Tips";
 
-export default function Generator() {
+
+export default function Generator({canvasRef}) {
   const [user, setUser] = useState({});
 
   function oonUpdateUser(newUser) {
@@ -29,19 +30,20 @@ export default function Generator() {
         <Tips />
       </div>
       <div>
-        <DPCanvas user={user} onImageUpload={handleImageUpload} />
+        <DPCanvas user={user} onImageUpload={handleImageUpload} canvasRef={canvasRef} />
       </div>
     </div>
   );
 }
 
-function DPCanvas({ user, onImageUpload }) {
+function DPCanvas({ user, onImageUpload, canvasRef }) {
   console.log(user);
+
   return (
     <div className="canvas">
       <h3 className="title"> Generate your DP</h3>
 
-      <div className="canvas-container" id="canvas-container">
+      <div  className="canvas-container" id="canvas-container" ref={canvasRef}>
         <img
           id="bg-image"
           src="/edited-linkedIn-profile.png"
